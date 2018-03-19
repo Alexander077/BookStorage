@@ -25,10 +25,11 @@ namespace BookStorage.Web.Ui.Controllers
             return _bookService.GetAllBooks();
         }
 
+        //TODO: Replace returned DTO with something that fits better
         // GET api/<controller>/5
-        public string Get(int id)
+        public BookDTO Get(int id)
         {
-            return "value";
+            return _bookService.FindBook(id);
         }
 
         // POST api/<controller>
