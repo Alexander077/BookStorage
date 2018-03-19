@@ -1,17 +1,27 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.main-container {
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+body {
+    font-family: "Arial";
+    font-size: 14px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+
+.books-table {
+    border: 1px double black;
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.books-table th {
+    text-align: left;
+    background: #ccc;
+    padding: 5px;
+    border: 1px solid black; 
+}
+
+.books-table td {
+    padding: 5px; 
+    border: 1px solid black; 
 }

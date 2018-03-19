@@ -11,14 +11,9 @@ namespace BookStorage.Web.Ui.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
-        {
-            
-        }
-
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Book Storage";
             return View();
         }
     }

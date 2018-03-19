@@ -1,1 +1,20 @@
-﻿
+﻿<table class="books-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Publishing House</th>
+            <th>Year Of Publishing</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: books">
+        <tr>
+            <td data-bind="text: title"></td>
+            <td data-bind="text: authors"></td>
+            <td data-bind="text: publishingHouse"></td>
+            <td data-bind="text: yearOfPublishing"></td>
+            <td><a href="javascript:void(0)" data-bind="click: edit">Edit</a></td>
+        </tr>
+    </tbody>
+</table>

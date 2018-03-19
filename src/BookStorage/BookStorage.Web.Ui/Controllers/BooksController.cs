@@ -22,6 +22,7 @@ namespace BookStorage.Web.Ui.Controllers
         // GET api/<controller>
         public IEnumerable<BookDTO> Get()
         {
+            //TODO: replace DTO to viewmodels
             return _bookService.GetAllBooks();
         }
 
