@@ -24,13 +24,15 @@ namespace BookStorage.Data.Access.EF
     }
 
     public class BookStorageDbInitializer :
-    DropCreateDatabaseAlways<BookStorageContext>
+    //DropCreateDatabaseAlways<BookStorageContext>
     //DropCreateDatabaseIfModelChanges<BookStorageContext>
-    //CreateDatabaseIfNotExists<BookStorageContext>
+    CreateDatabaseIfNotExists<BookStorageContext>
     {
         protected override void Seed(BookStorageContext db)
         {
-            db.Books.Add(new Book { Title = "asdasd", Authors = "asdasd, asdasd" , PublishingHouse = "House asd", YearOfPublishing = 2000});
+            db.Books.Add(new Book { Title = "Book1", Authors = "Author 1.1" , PublishingHouse = "House 1", YearOfPublishing = 2001});
+            db.Books.Add(new Book { Title = "book2", Authors = "Author 2.1", PublishingHouse = "House 2", YearOfPublishing = 2001});
+            db.Books.Add(new Book { Title = "Book3", Authors = "Author 3.1", PublishingHouse = "House 3", YearOfPublishing = 2001});
             db.SaveChanges();
         }
     }

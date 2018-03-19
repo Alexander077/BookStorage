@@ -11,18 +11,18 @@ namespace BookStorage.Web.Ui.Controllers
 {
     public class HomeController : Controller
     {
-        IBookService _bookService;
-
-        public HomeController(IBookService bookService)
+        public HomeController()
         {
-            _bookService = bookService;
+            
         }
 
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
-            
+            //BookDTO asd = _bookService.FindBook(1);
+            //List<BookDTO> asd = _bookService.GetAllBooks().ToList();
+
             return View();
         }
     }

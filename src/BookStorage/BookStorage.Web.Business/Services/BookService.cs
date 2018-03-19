@@ -19,7 +19,7 @@ namespace BookStorage.Web.Business.Services
             {
                 cfg.CreateMap<Book, BookDTO>();
                 cfg.CreateMap<BookDTO, Book>();
-                cfg.CreateMap<IEnumerable<Book>, IEnumerable<BookDTO>>();
+                //cfg.CreateMap<IEnumerable<Book>, IEnumerable<BookDTO>>();
             });
         }
 
