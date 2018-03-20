@@ -11,25 +11,25 @@ namespace BookStorage.Data.Access.EF
 {
     public class UnitOfWork : IUnitOfWork
     {
-        BookStorageContext db;
+        BookStorageContext _db;
         BookRepository _bookRepository;
 
         public UnitOfWork(string connectionString)
         {
-            db = new BookStorageContext(connectionString);
+            _db = new BookStorageContext(connectionString);
         }
 
         public IRepository<Book> Books
         {
             get
             {
-                return _bookRepository ?? (_bookRepository = new BookRepository(db));
+                return _bookRepository ?? (_bookRepository = new BookRepository(_db));
             }
         }
 
         public void Save()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
         private bool disposed = false;
@@ -40,7 +40,7 @@ namespace BookStorage.Data.Access.EF
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _db.Dispose();
                 }
             }
             this.disposed = true;
