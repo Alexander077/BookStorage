@@ -35,24 +35,12 @@ namespace BookStorage.Data.Access.EF.Repositories
 
         public void Update(Book item)
         {
-/*
-            var entry = db.Entry(item);
-
-            if (entry == null || entry.State == EntityState.Detached)
-            {
-                db.Books.Attach(item);
-                entry.State = EntityState.Modified;
-            }
-*/
-
-            //TODO: check if code valid
             db.Books.Attach(item);
             db.Entry(item).State = EntityState.Modified;
         }
 
         public void Delete(Book entity)
         {
-            //TODO: check if code valid
             if (db.Entry(entity).State == EntityState.Detached)
             {
                 db.Books.Attach(entity);

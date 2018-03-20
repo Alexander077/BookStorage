@@ -20,7 +20,6 @@ namespace BookStorage.Web.Ui
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //NinjectConfig.RegisterModules();
             AutoMapperConfig.RegisterMappings();
         }
     }

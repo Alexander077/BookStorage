@@ -33,20 +33,40 @@
             .done(function (data, textStatus, jqXHR) {
                     self.books.push(self.itemToCreate());
                     self.itemToCreate(null);
+                    self.isCreateMode(false);
                     alert("Book successfully added");
                 })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                alert("Error while creating book: " + textStatus);
+
+                if (jqXHR.status === 400){
+
+                    var errData = JSON.parse(jqXHR.responseText);
+                    var errText = "";
+
+                    for (var field in errData.ModelState)
+                    {
+                        errText += errData.ModelState[field][errData.ModelState[field].length - 1] + "\n";
+                    }
+
+                    alert("Error while creating book.\n" + errText);
+                } else {
+                    alert("Error while creating book.  Server side error occurred.");
+                }
             })
             .always(function () {
-                self.isCreateMode(false);
             });
         }
 
         this.editMode = function (editEnabled) {
 
             if (editEnabled){
-                self.editItem(this);
+                self.editItem(new BookModel({
+                    Id: this.id(),
+                    Title: this.title(),
+                    Authors : this.authors(),
+                    PublishingHouse : this.publishingHouse(),
+                    YearOfPublishing : this.yearOfPublishing()
+                }));
             } 
 
             self.isEditMode(editEnabled);
@@ -56,7 +76,7 @@
 
             $.ajax({
                 method: "PUT",
-                url: "/api/books/" + this.editItem().id(),
+                url: "/api/books/" + this.editItem().id() ,
                 data: {
                     Id: this.editItem().id(),
                     Title: this.editItem().title(),
@@ -66,12 +86,38 @@
                 }
             })
             .done(function (data, textStatus, jqXHR) {
+
+                var oldObj;
+
+                ko.utils.arrayForEach(self.books(), function(item) {
+                    if (item.id() === self.editItem().id()) {
+                        oldObj = item;
+                    }
+                });
+
+                self.books.replace(oldObj, self.editItem());
                 alert("Book saved");
+                self.isEditMode(false);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                alert("Error: " + textStatus);
+
+                if (jqXHR.status === 400)
+                {
+                    var errData = JSON.parse(jqXHR.responseText);
+                    var errText = "";
+
+                    for (var field in errData.ModelState)
+                    {
+                        errText += errData.ModelState[field][errData.ModelState[field].length - 1] + "\n";
+                    }
+
+                    alert("Error while updating book.\n" + errText);
+                } else {
+                    alert("Error while updating book.  Server side error occurred.");
+                }
+
             }).always(function () {
-                self.isEditMode(false);
+                
             });
         }
 
@@ -80,14 +126,24 @@
             if (confirm("Are you sure that you want to delete this book?")) {
                 $.ajax({
                         method: "DELETE",
-                        url: "/api/books/" + this.editItem().id()
+                        url: "/api/books/" + self.editItem().id()
                     })
-                    .done(function(data, textStatus, jqXHR) {
-                        self.books.remove(self.editItem());
+                    .done(function (data, textStatus, jqXHR) {
+
+                        var delObj;
+
+                        ko.utils.arrayForEach(self.books(), function (item) {
+                            if (item.id() === self.editItem().id())
+                            {
+                                delObj = item;
+                            }
+                        });
+
+                        self.books.remove(delObj);
                         alert("Book deleted");
                     })
-                    .fail(function(jqXHR, textStatus, errorThrown) {
-                        alert("Error while deleting book: " + textStatus);
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("Can't delete book. Server side error occurred.");
                     })
                     .always(function() {
                         self.isEditMode(false);
@@ -111,18 +167,22 @@
                    }
                })
                .fail(function (jqXHR, textStatus, errorThrown) {
-                   alert("Error: " + textStatus);
+                   if (jqXHR.status === 500){
+                       alert("Can't retrieve books list. Server side error occurred.");
+                   } else {
+                       alert("Error while retrieving books list.");
+                   }
                });
         }
     };
 
     var BookModel = function (data) {
 
-        this.id = ko.observable();
-        this.title = ko.observable();
-        this.authors = ko.observable();
-        this.publishingHouse = ko.observable();
-        this.yearOfPublishing = ko.observable();
+        this.id = ko.observable("");
+        this.title = ko.observable("");
+        this.authors = ko.observable("");
+        this.publishingHouse = ko.observable("");
+        this.yearOfPublishing = ko.observable(0);
 
         if (data){
 

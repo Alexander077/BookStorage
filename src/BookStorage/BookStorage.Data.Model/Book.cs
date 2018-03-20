@@ -11,12 +11,19 @@ namespace BookStorage.Data.Model
     {
         [Key]
         public int Id { get; set; }
+
+        [MaxLength(150)]
         [Required]
         public string Title { get; set; }
+
+        [MaxLength(150)]
         [Required]
         public string Authors { get; set; }
+
+        [MaxLength(150)]
         [Required]
         public string PublishingHouse { get; set; }
+
         [Required]
         public int YearOfPublishing { get; set; }
     }

@@ -33,15 +33,31 @@ namespace BookStorage.Web.Ui.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]BookViewModel value)
+        public IHttpActionResult Post([FromBody]BookViewModel value)
         {
-            _bookService.AddBook(Mapper.Map<BookViewModel, BookDTO>(value));
+            if (ModelState.IsValid)
+            {
+                _bookService.AddBook(Mapper.Map<BookViewModel, BookDTO>(value));
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]BookViewModel value)
+        public IHttpActionResult Put(int id, [FromBody]BookViewModel value)
         {
-            _bookService.UpdateBook(Mapper.Map<BookViewModel, BookDTO>(value));
+            if (ModelState.IsValid)
+            {
+                _bookService.UpdateBook(Mapper.Map<BookViewModel, BookDTO>(value));
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         // DELETE api/<controller>/5
