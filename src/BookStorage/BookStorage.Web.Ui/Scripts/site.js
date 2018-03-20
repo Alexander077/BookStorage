@@ -31,6 +31,7 @@
                 }
             })
             .done(function (data, textStatus, jqXHR) {
+                    self.itemToCreate().id(data.newBookId);
                     self.books.push(self.itemToCreate());
                     self.itemToCreate(null);
                     self.isCreateMode(false);
@@ -43,8 +44,7 @@
                     var errData = JSON.parse(jqXHR.responseText);
                     var errText = "";
 
-                    for (var field in errData.ModelState)
-                    {
+                    for (var field in errData.ModelState){
                         errText += errData.ModelState[field][errData.ModelState[field].length - 1] + "\n";
                     }
 

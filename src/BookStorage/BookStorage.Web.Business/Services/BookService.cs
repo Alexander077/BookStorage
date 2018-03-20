@@ -36,11 +36,12 @@ namespace BookStorage.Web.Business.Services
             return Mapper.Map<IEnumerable<Book>, IEnumerable<BookDTO>>(_db.Books.Select());
         }
 
-        public void AddBook(BookDTO newBook)
+        public int AddBook(BookDTO newBook)
         {
             Book bookToAdd = Mapper.Map<BookDTO, Book>(newBook);
             _db.Books.Create(bookToAdd);
             _db.Save();
+            return bookToAdd.Id;
         }
 
         public void DeleteBook(int id)

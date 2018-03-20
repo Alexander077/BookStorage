@@ -12,7 +12,7 @@ namespace BookStorage.Business.Interfaces
     {
         BookDTO FindBook(int id);
         IEnumerable<BookDTO> GetAllBooks();
-        void AddBook(BookDTO newBook);
+        int AddBook(BookDTO newBook);
         void DeleteBook(int id);
         void UpdateBook(BookDTO bookToUpdate);
     }

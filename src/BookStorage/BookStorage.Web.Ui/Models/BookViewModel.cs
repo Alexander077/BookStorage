@@ -22,7 +22,7 @@ namespace BookStorage.Web.Ui.Models
         [MaxLength(150, ErrorMessage = "Publishing House field must be not longer than {1} characters")]
         public string PublishingHouse { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Year Of Publishing is invalid")]
+        [Range(1, 9999, ErrorMessage = "Year Of Publishing must be between {1} and {2}")]
         public int YearOfPublishing { get; set; }
     }
 }

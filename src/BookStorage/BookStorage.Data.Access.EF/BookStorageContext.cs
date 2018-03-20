@@ -24,9 +24,9 @@ namespace BookStorage.Data.Access.EF
     }
 
     public class BookStorageDbInitializer :
-    DropCreateDatabaseAlways<BookStorageContext>
+    //DropCreateDatabaseAlways<BookStorageContext>
     //DropCreateDatabaseIfModelChanges<BookStorageContext>
-    //CreateDatabaseIfNotExists<BookStorageContext>
+    CreateDatabaseIfNotExists<BookStorageContext>
     {
         protected override void Seed(BookStorageContext db)
         {

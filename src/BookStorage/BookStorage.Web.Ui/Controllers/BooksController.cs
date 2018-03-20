@@ -37,8 +37,8 @@ namespace BookStorage.Web.Ui.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bookService.AddBook(Mapper.Map<BookViewModel, BookDTO>(value));
-                return Ok();
+                int newBookId = _bookService.AddBook(Mapper.Map<BookViewModel, BookDTO>(value));
+                return Ok(new {newBookId = newBookId });
             }
             else
             {
