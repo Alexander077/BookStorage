@@ -8,6 +8,7 @@ using BookStorage.Business.DTO;
 using BookStorage.Business.Interfaces;
 using BookStorage.Data.Access.Iterfaces;
 using BookStorage.Data.Model;
+using BookStorage.Web.Business.AutoMapper;
 
 namespace BookStorage.Web.Business.Services
 {
@@ -15,12 +16,7 @@ namespace BookStorage.Web.Business.Services
     {
         static BookService()
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Book, BookDTO>();
-                cfg.CreateMap<BookDTO, Book>();
-                //cfg.CreateMap<IEnumerable<Book>, IEnumerable<BookDTO>>();
-            });
+           AutoMapperConfig.RegisterMappings();
         }
 
         IUnitOfWork _db;
@@ -44,17 +40,20 @@ namespace BookStorage.Web.Business.Services
         {
             Book bookToAdd = Mapper.Map<BookDTO, Book>(newBook);
             _db.Books.Create(bookToAdd);
+            _db.Save();
         }
 
         public void DeleteBook(int id)
         {
             _db.Books.Delete(_db.Books.Find(id));
+            _db.Save();
         }
 
         public void UpdateBook(BookDTO bookToUpdate)
         {
             Book book = Mapper.Map<BookDTO, Book>(bookToUpdate);
             _db.Books.Update(book);
+            _db.Save();
         }
     }
 }

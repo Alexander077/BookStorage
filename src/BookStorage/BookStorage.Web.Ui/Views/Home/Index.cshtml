@@ -1,5 +1,6 @@
-﻿<table class="books-table">
-    <thead>
+﻿<div class="books-list" data-bind="visible: !isEditMode() && !isCreateMode()">
+    <table class="books-table">
+        <thead>
         <tr>
             <th>Title</th>
             <th>Authors</th>
@@ -7,14 +8,75 @@
             <th>Year Of Publishing</th>
             <th></th>
         </tr>
-    </thead>
-    <tbody data-bind="foreach: books">
+        </thead>
+        <tbody data-bind="foreach: books">
         <tr>
             <td data-bind="text: title"></td>
             <td data-bind="text: authors"></td>
             <td data-bind="text: publishingHouse"></td>
             <td data-bind="text: yearOfPublishing"></td>
-            <td><a href="javascript:void(0)" data-bind="click: edit">Edit</a></td>
+            <td><input type="button" value="Edit" data-bind="click: $root.editMode.bind($data, true)"></td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <div class="add-new-button-container">
+        <input type="button" value="Add New" data-bind="click: createMode.bind($data, true)">
+    </div>
+</div>
+
+
+<div class="edit-form" data-bind="visible: isEditMode()">
+    <table data-bind="with: editItem">
+        <tbody>
+        <tr>
+            <td class="edit-row-header">Title</td>
+            <td><input type="text" class="editInput" data-bind="value: title, hasfocus: $root.isEditMode()"/></td>
+        </tr>
+        <tr>
+            <td class="edit-row-header">Authors</td>
+            <td><input type="text" class="editInput" data-bind="value: authors"/></td>
+        </tr>
+        <tr>
+            <td class="edit-row-header">Publishing House</td>
+            <td><input type="text" class="editInput" data-bind="value: publishingHouse"/></td>
+        </tr>
+        <tr>
+            <td class="edit-row-header">Year Of Publishing</td>
+            <td><input type="number" step="1" class="editInput" data-bind="value: yearOfPublishing"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="edit-buttons-container">
+        <input type="button" value="Save" data-bind="click: confirmEdit"/>
+        <input type="button" value="Delete" data-bind="click: deleteBook"/>
+        <input type="button" value="Cancel" data-bind="click: editMode.bind($data, false)"/>
+    </div>
+</div>
+
+
+<div class="create-form" data-bind="visible: isCreateMode()">
+    <table>
+        <tbody>
+        <tr>
+            <td class="create-row-header">Title</td>
+            <td><input type="text" class="editInput" data-bind="value: itemToCreate() ? itemToCreate().title : '', , hasfocus: isCreateMode()"/></td>
+        </tr>
+        <tr>
+            <td class="create-row-header">Authors</td>
+            <td><input type="text" class="editInput" data-bind="value: itemToCreate() ? itemToCreate().authors : ''"/></td>
+        </tr>
+        <tr>
+            <td class="create-row-header">Publishing House</td>
+            <td><input type="text" class="editInput" data-bind="value: itemToCreate() ? itemToCreate().publishingHouse : ''"/></td>
+        </tr>
+        <tr>
+            <td class="create-row-header">Year Of Publishing</td>
+            <td><input type="number" step="1" class="editInput" data-bind="value: itemToCreate() ? itemToCreate().yearOfPublishing : ''"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="create-buttons-container">
+        <input type="button" value="Add" data-bind="click: createBook"/>
+        <input type="button" value="Cancel" data-bind="click: isCreateMode.bind($data, false)"/>
+    </div>
+</div>

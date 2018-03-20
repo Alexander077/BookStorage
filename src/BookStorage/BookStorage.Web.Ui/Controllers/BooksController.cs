@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BookStorage.Business.DTO;
 using BookStorage.Business.Interfaces;
+using BookStorage.Web.Ui.Models;
 
 namespace BookStorage.Web.Ui.Controllers
 {
@@ -18,34 +20,34 @@ namespace BookStorage.Web.Ui.Controllers
             _bookService = bookService;
         }
 
-        //TODO: Replace returned DTO with something that fits better
         // GET api/<controller>
-        public IEnumerable<BookDTO> Get()
+        public IEnumerable<BookViewModel> Get()
         {
-            //TODO: replace DTO to viewmodels
-            return _bookService.GetAllBooks();
+            return Mapper.Map<IEnumerable<BookDTO>, IEnumerable<BookViewModel>>(_bookService.GetAllBooks());
         }
 
-        //TODO: Replace returned DTO with something that fits better
         // GET api/<controller>/5
-        public BookDTO Get(int id)
+        public BookViewModel Get(int id)
         {
-            return _bookService.FindBook(id);
+            return Mapper.Map<BookDTO, BookViewModel>(_bookService.FindBook(id));
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public void Post([FromBody]BookViewModel value)
         {
+            _bookService.AddBook(Mapper.Map<BookViewModel, BookDTO>(value));
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]BookViewModel value)
         {
+            _bookService.UpdateBook(Mapper.Map<BookViewModel, BookDTO>(value));
         }
 
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+            _bookService.DeleteBook(id);
         }
     }
 }
